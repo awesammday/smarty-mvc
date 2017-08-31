@@ -5,8 +5,7 @@
 
     class Template {
         private $_smarty;
-        public $_routes;
-        public $_controller_dir;
+        public $_routes, $_controller_dir, $_template_name, $_template, $extra_css = '', $extra_js = '';
 
         function __construct(){
             $this->_smarty = new Smarty();
@@ -23,8 +22,32 @@
             $this->_controller_dir = $template_config['controller_dir'];
         }
 
-        function render($template){
-            $this->_smarty->display($template . '.tpl.html');
+        function add_css($css){
+            $this->extra_css .= "<link rel='stylesheet' href='$css'>\n";
+        }
+
+        function add_js($js){
+            $this->extra_js .= "<script src='$js'></script>\n";
+        }
+
+        function set_template($template_name){
+            $this->_template_name = $template_name;
+        }
+
+        function load_sub($key, $view){
+            $this->_template['sub'][$key] =  $this->_smarty->fetch($view . '.tpl.html');
+        }
+
+        function load($view){
+            $this->load_sub('content', $view);
+            $this->set('extra_css', $this->extra_css);
+            $this->set('extra_js', $this->extra_js); 
+
+            foreach($this->_template['sub'] as $key => $value){
+                $this->set($key, $value);
+            }
+            
+            $this->_smarty->display($this->_template_name . '.tpl.html');
         }
 
         function set($key, $value){

@@ -15,13 +15,14 @@
         );
         
         if(file_exists($controller['path'])){
-            
+
             require($controller['path']);
             $active_controller = new $controller['name']($app);
+
             $active_method = $controller['method'];
             $active_controller->$active_method();
-
         }else{
+            die('Resource not found on this server.');
             // throw 404 page here
         }
     }    

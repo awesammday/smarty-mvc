@@ -7,12 +7,15 @@
     <title>{$title}</title>
     <link rel="stylesheet" href="/dist/normalize/normalize.css">
     <link rel="stylesheet" href="/dist/bootstrap/css/bootstrap.min.css">
+    {$extra_css}
 </head>
-<body>  
-    {include file='components/header.php'}
-
+<body>
+    {$header}
+    {$content}
+    {$footer}
     <script src="/dist/jquery/jquery-3.1.1.min.js"></script>
     <script src="/dist/popper/popper.min.js"></script>
     <script src="/dist/bootstrap/js/bootstrap.min.js"></script>
+    {$extra_js}
 </body>
 </html>
